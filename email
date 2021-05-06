@@ -1,0 +1,46 @@
+Professor,
+
+Bom dia, espero que esta mensagem lhe encontre bem.
+
+Gostaria de pedir uma orientação no trabalho final da matéria.
+
+Estou tentando desenvolver a organização entre elevadores de um prédio como
+o problema do meu trabalho.
+
+Os moradores seriam threads e compartilham o acesso aos elevadores.
+Na maior parte do tempo, os moradores estão em casa ou na rua, e precisam
+utilizar o elevador para trocar entre esses lugares. Eles chamam o elevador
+e embarcam dadas algumas condições: a) o elevador tem espaço livre;
+b) o elevador está indo na direção que o morador quer ir.
+
+Os elevadores teriam limite de ocupação. Portanto, o momento de embarque
+no elevador seria uma região de exclusão mútua,
+para que não entrem mais pessoas do que o permitido no momento.
+O elevador muda de sentido quando não há nenhum chamado mais a frente para
+aquele sentido. Exemplo: se está subindo para o 4º andar e
+recebe um chamado para o 6º, ele vai ao 6º depois. No meio tempo ele recebe
+chamados ao 8º e ao 3º, portanto vai continuar até o 8º, e só depois ao 3º.
+Se nenhum chamado é feito, ele fica parado no último andar onde parou.
+
+O elevador também precisa receber manutenção, então de tempos em tempos 
+o seu uso será interrompido para o zelador do prédio poder realizar 
+os serviços. Os moradores aguardando aquele elevador devem esperar 
+(dormir) até que o zelador saia e libere o uso.
+
+Tenho algumas ideias para aumentar a complexidade do sistema, mas não sei 
+até que ponto elas aumentam a concorrência. Ideias:
+
+	- Alguns moradores podem morar em grupo, e o grupo usa o elevador
+	em conjunto. Nenhum entrará se o elevador não tiver espaço para todos.
+    
+	- Devido a pandemia, o elevador só pode ser utilizado por moradores 
+	do mesmo apartamento. Moradores do mesmo andar, portanto, devem 
+	descer um grupo de cada vez.
+
+Isso resume minha concepção do trabalho. O senhor acha que há um bom 
+cenário de concorrência aí? Aceito de muito bom grado qualquer sugestão 
+para melhorá-lo, e agradeço desde já sua atenção.
+
+Att,
+
+João Moraes (16/0126975)

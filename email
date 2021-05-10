@@ -44,3 +44,92 @@ para melhorá-lo, e agradeço desde já sua atenção.
 Att,
 
 João Moraes (16/0126975)
+
+------------------------------------------------------------------------
+
+Problemas encontrados
+
+Como representar os chamados ao elevador?
+
+Primeira tentativa: um vetor cujo tamanho é igual ao número de andares.
+
+edificio[ANDARES]
+edificio[i] = 0 -> o elevador não foi chamado
+edificio[i] = 1 -> há um chamado no andar i
+
+Esse vetor precisa estar em uma região de exclusão mútua?
+
+Para responder, devo pensar quais fatores concorrentes implicam em erro.
+
+No momento de chamar o elevador, há uma possível condição de corrida?
+
+Um morador pode interferir diretamente no valor de outros moradores?
+Eles podem apenas chamar o elevador em seus respectivos andares. Não há
+como desativar o chamado de outro morador. Apenas o elevador realiza uma 
+ação desse tipo: ao chegar em um andar, ele deve sinalizar que chegou ali, 
+atribuindo valor 0 no vetor dos chamados.
+
+Fluxo do elevador
+
+O elevador está parado
+
+Um morador do 5º andar chama o elevador, fazendo edificio[] = 1. 
+
+A partir daí, o elevador deve:
+	- fechar a porta;
+	- começar a subir.
+ 
+O que acontece se um chamado é feito do 3º andar?
+	- Se o elevador está no 3º andar, não é possível que ele pare bruscamente.
+	O elevador pára apenas se o chamado foi feito a 2 (1?) andares de distancia.
+	Do contrário, seguirá subindo.
+	
+Hipotese de funcionamento:
+
+- O elevador fecha a porta -> pode ser um estado
+- Confere se há um chamado para o andar seguinte
+- Se há um chamado, muda o estado de subindo -> parar
+- Para ao chegar no andar
+- Abre a porta
+
+
+Utilizando um VETOR de LISTAS de semaforos.
+
+Ao embarcar no elevador, o morador passa a esperar para sair em um semaforo.
+O elevador adiciona o semaforo na lista correspondente ao andar de destino.
+Ao chegar nesse andar, libera os semaforos de todos os moradores.
+
+O vetor de listas acaba representando as posicoes atuais dos moradores;
+
+Uma forma simples de movimentar o elevador é calculando a próxima parada sempre
+que parar em um andar.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

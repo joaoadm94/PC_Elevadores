@@ -6,7 +6,7 @@
 #include <time.h>
 
 #define ANDARES 3 // numero de andares
-#define APTOS 2 // numero de apartamentos por andar
+#define APTOS 2  // numero de apartamentos por andar
 #define SOCIAL 1 // numero de elevadores sociais
 #define SERVICO 5  // numero de elevadores de servico
 #define ZELADOR 1 // numero de funcionarios
@@ -19,7 +19,6 @@ void main(argc, argv)
 int argc;
 char *argv[];
 {
-
   int erro;
   int i, n, m;
   int *id;
@@ -41,14 +40,18 @@ char *argv[];
   }
 
   printf("Total de moradores: %d\n", conta_moradores);
+  pthread_t moradorid[conta_moradores];
 
   // criando as threads, cada uma é um morador
   for (int j = 0; j < ANDARES; j++) {
     for (int k = 0; k < APTOS; k++) {
-      printf("Apto %d0%d: %d\n", j+1, k+1, moradores[j][k]);
+      for (int l = 0; l < moradores[j][k]; l++) {
+        id = (int *) malloc(sizeof(int));
+        *id = 
+        pthread_create(&moradorid[i], NULL, Morador, (void *) id);
+      }
     }
   }
-
 
 
   /*

@@ -1,3 +1,12 @@
+// Universidade de Brasília
+// Programação Concorrente
+// Prof Eduardo Alchieri
+// Projeto de Sincronização entre Processos
+// Estudante: Joao Antonio Desiderio de Moraes 
+// Matricula: 16/0126975
+
+// Tematica: simulacao de elevadores em um edificio
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <pthread.h>
@@ -6,8 +15,8 @@
 #include <time.h>
 
 #define ANDARES 10 // numero de andares
-#define ELEVADOR 1
-#define CAPACIDADE 5 
+
+// Estados possiveis do elevador
 #define SUBINDO 2
 #define DESCENDO 1
 #define PARADO 0
@@ -17,19 +26,30 @@ void* elevador_func (void* args);
 int buscar_chamado_acima();
 int buscar_chamado_abaixo();
 
+// entidade utilizada para passar mais de um valor a thread morador
 typedef struct  {
   int id;
   int andar_origem;
 } morador_args;
 
+// quantos moradores desejam ENTRAR no elevador por andar
 int entrar[ANDARES];
+// quantos moradores desejam SAIR no elevador por andar
 int sair[ANDARES];
+// em quais andares há chamados (0 - não, 1 - ha chamado)
 int chamados[ANDARES];
 
+// semaforo para criar regiao de exclusao mutua 
 sem_t sem_mutex;
+// semaforo para sincronizar o elevador
 sem_t sem_elevador;
-sem_t sem_capacidade;
+
+// semaforo onde o morador aguarda para ENTRAR no elevador
+// em um determinado andar
 sem_t sem_entrar[ANDARES];
+
+// semaforo onde o morador aguarda para SAIR do elevador
+// em um determinado andar
 sem_t sem_sair[ANDARES];
 
 int main(int argc, char *argv[]) {
@@ -43,8 +63,6 @@ int main(int argc, char *argv[]) {
   sem_init(&sem_mutex, 0, 1);
 
   sem_init(&sem_elevador, 0, 0);
-
-  sem_init(&sem_capacidade, 0, CAPACIDADE);
 
   pthread_create(&elevadorid, NULL, elevador_func, NULL);
 
@@ -60,7 +78,7 @@ int main(int argc, char *argv[]) {
 
 
   morador_args* Morador  = (morador_args*) malloc(sizeof (morador_args));
-  Morador->id = 3;
+  Morador->id = 1;
   Morador->andar_origem = 3;
 
   pthread_create(&moradorid, NULL, morador_func, (void*) Morador);
@@ -245,7 +263,7 @@ void* elevador_func (void* args) {
           sleep(1);
         }
       }
-      
+    
       sem_wait(&sem_mutex);
         
       chamados[posicao] = 0;
